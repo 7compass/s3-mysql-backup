@@ -1,2 +1,67 @@
-s3-mysql-backup
-===============
+# S3 MySQL Backup
+
+Simple backup of a MySQL database to Amazon S3, 
+with email notification via Gmail.
+
+
+## What does it do?
+
+It makes a gzipped and timestamped local backup of the specified 
+database using mysqldump.  The local backup is then copied to 
+Amazon S3, and the results are emailed to the specified recipient.
+
+Local and S3 backups are retained at this schedule:
+- keep 30 days complete
+- keep 90 days weekly beyond that
+- keep only monthly after that
+
+
+## Configuration
+
+Configure with a YAML file:
+
+```yaml
+
+# backup_dir            where to store the local backups
+backup_dir: ~/s3_mysql_backups
+
+# s3_access_key_id      your Amazon S3 access_key_id
+# s3_secret_access_key  your Amazon S3 secret_access_key
+# s3_bucket             your Amazon S3 bucket for the backups
+s3_access_key_id: my-key
+s3_secret_access_key: my-secret
+s3_bucket: my-bucket
+
+# dump_user             the database user for mysqldump
+# dump_pass             the password for the dump user
+dump_user: my-user
+dump_pass: my-pass
+
+# mail_to               where to send the backup summary email
+mail_to: recipient@example.com
+
+# Gmail credentials
+gmail_user: me@gmail.com
+gmail_pass: gmail-password
+
+```
+
+
+## Installation 
+
+    gem install s3-mysql-backup
+
+
+## Usage
+
+    S3MysqlBackup.new('database_name', '/path/to/s3-mysql-backup-config.yml').run
+
+
+## Todo
+
+Write tests
+
+
+## Credits
+
+2008+ Seventh Compass
