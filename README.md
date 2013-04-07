@@ -63,7 +63,13 @@ gmail_pass: gmail-password
 
 ## Usage
 
+From Ruby:
+
     S3MysqlBackup.new('database_name', '/path/to/s3-mysql-backup-config.yml').run
+
+From command line:
+
+    s3-mysql-backup database_name /path/to/s3-mysql-backup-config.yml
 
 
 ## Todo
