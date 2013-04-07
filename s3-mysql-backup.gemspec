@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name         = 's3-mysql-backup'
-  s.version      = '1.0.0'
+  s.version      = '1.0.1'
   s.date         = '2013-04-07'
   s.summary      = "Simple mysql backup to S3"
   s.description  = "A simple mysql backup to Amazon S3"
@@ -11,6 +11,9 @@ Gem::Specification.new do |s|
   s.platform     = Gem::Platform::RUBY
   s.require_path = '.'
   s.require_paths << 'lib'
+
+  s.default_executable = %q{s3-mysql-backup}
+  s.executables        = ["s3-mysql-backup"]
 
   s.add_runtime_dependency('aws-s3', [">= 0"])
 end
