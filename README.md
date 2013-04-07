@@ -15,6 +15,15 @@ Local and S3 backups are retained at this schedule:
 - keep 90 days weekly beyond that
 - keep only monthly after that
 
+The email summary is a short email like:
+
+    From:    my-user@gmail.com
+    To:      my-recipient@example.com
+    Date:    2012-12-22
+    Subject: sql backup: my_database_name: 42.0 MB
+
+    my_database_name.20121222.170134.sql.gz
+
 
 ## Configuration
 
