@@ -71,6 +71,10 @@ From command line:
 
     s3-mysql-backup database_name /path/to/s3-mysql-backup-config.yml
 
+If you're using bundler:
+
+    cd /path/to/my/app && bundle exec s3-mysql-backup database_name /path/to/s3-mysql-backup-config.yml
+
 
 ## Todo
 
