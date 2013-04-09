@@ -1,0 +1,22 @@
+
+# backup_dir   where to store the local backups
+backup_dir: /tmp/s3_mysql_backups
+
+# s3_access_key_id      your Amazon S3 access_key_id
+# s3_secret_access_key  your Amazon S3 secret_access_key
+# s3_bucket             your Amazon S3 bucket for the backups
+s3_access_key_id: my-key
+s3_secret_access_key: my-secret
+s3_bucket: my-bucket
+
+# dump_user             the database user for mysqldump
+# dump_pass             the password for the dump user
+dump_user: my-user
+dump_pass: my-pass
+
+# mail_to               where to send the backup summary email
+mail_to: recipient@example.com
+
+# Gmail credentials
+gmail_user: me@gmail.com
+gmail_pass: gmail-password

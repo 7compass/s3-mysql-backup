@@ -18,16 +18,24 @@ class S3MysqlBackup
   def run
     ensure_backup_dir_exists
 
-    @s3utils = S3Utils.new(config['s3_access_key_id'], config['s3_secret_access_key'], config['s3_bucket'])
+    connect_to_s3
 
-    @dumpfile = dump_db
     remove_old_backups
-    mail_notification(@dumpfile)
+    
+    mail_notification(dump_db)
   end
   
   
   protected
   
+  def config
+    @s3config ||= YAML::load_file(@path_to_config)
+  end
+
+  def connect_to_s3
+    @s3utils ||= S3Utils.new(config['s3_access_key_id'], config['s3_secret_access_key'], config['s3_bucket'])
+  end
+
   # make the DB backup file
   def dump_db
     filename  = Time.now.strftime("#{@backup_dir}/#{@db_name}.%Y%m%d.%H%M%S.sql.gz")
@@ -68,10 +76,6 @@ class S3MysqlBackup
     smtp.start("smtp.gmail.com", config['gmail_user'], config['gmail_pass'], :login) do
       smtp.send_message(content, config['gmail_user'], config['mail_to'])
     end
-  end
-
-  def config
-    @s3config ||= YAML::load_file(@path_to_config)
   end
 
   # remove old backups
