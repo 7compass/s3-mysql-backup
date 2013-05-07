@@ -33,7 +33,7 @@ class S3MysqlBackup
   end
 
   def connect_to_s3
-    @s3utils ||= S3Utils.new(config['s3_access_key_id'], config['s3_secret_access_key'], config['s3_bucket'])
+    @s3utils ||= S3Utils.new(config['s3_access_key_id'], config['s3_secret_access_key'], config['s3_bucket'], config['s3_server'])
   end
 
   # make the DB backup file
