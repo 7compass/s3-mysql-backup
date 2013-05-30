@@ -42,6 +42,7 @@ s3_access_key_id: my-key
 s3_secret_access_key: my-secret
 s3_bucket: my-bucket
 
+# dump_host             OPTIONAL: your mysql host name
 # dump_user             the database user for mysqldump
 # dump_pass             the password for the dump user
 dump_user: my-user
