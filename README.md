@@ -37,6 +37,7 @@ backup_dir: ~/s3_mysql_backups
 # s3_access_key_id      your Amazon S3 access_key_id
 # s3_secret_access_key  your Amazon S3 secret_access_key
 # s3_bucket             your Amazon S3 bucket for the backups
+# s3_server             OPTIONAL: your non-Amazon S3-compatible server
 s3_access_key_id: my-key
 s3_secret_access_key: my-secret
 s3_bucket: my-bucket
