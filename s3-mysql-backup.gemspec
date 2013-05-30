@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name         = 's3-mysql-backup'
-  s.version      = '1.0.6'
-  s.date         = '2013-04-07'
+  s.version      = '1.1.0'
+  s.date         = '2013-05-30'
   s.summary      = "Simple mysql backup to S3"
   s.description  = "A simple mysql backup to Amazon S3"
   s.authors      = ["Jeff Emminger"]
