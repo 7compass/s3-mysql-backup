@@ -84,7 +84,7 @@ Write tests
 
 
 ## Changelog
-
+- 2013-06-01 Added mysql host option (github.com/sagrimson)
 - 2013-05-30 Added support for S3-compatible services, e.g. DreamObjects (thanks to John N. Milner - github.com/jnm)
 
 ## Credits
