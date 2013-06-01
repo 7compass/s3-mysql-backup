@@ -29,7 +29,8 @@ class S3MysqlBackup
   protected
   
   def config
-    @s3config ||= YAML::load_file(@path_to_config)
+    defaults = { 'dump_host' => 'localhost' }
+    @s3config ||= defaults.merge(YAML::load_file(@path_to_config))
   end
 
   def connect_to_s3
@@ -40,7 +41,7 @@ class S3MysqlBackup
   def dump_db
     filename  = Time.now.strftime("#{@backup_dir}/#{@db_name}.%Y%m%d.%H%M%S.sql.gz")
     mysqldump = `which mysqldump`.to_s.strip
-    `#{mysqldump} --user=#{config['dump_user']} --password=#{config['dump_pass']} #{@db_name} | gzip > #{filename}`
+    `#{mysqldump} --host=#{config['dump_host']} --user=#{config['dump_user']} --password=#{config['dump_pass']} #{@db_name} | gzip > #{filename}`
     @s3utils.store(filename)
     filename
   end
