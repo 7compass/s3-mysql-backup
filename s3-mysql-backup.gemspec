@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name         = 's3-mysql-backup'
-  s.version      = '1.2.1'
+  s.version      = '1.2.2'
   s.date         = Date.today
   s.summary      = "Simple mysql backup to S3"
   s.description  = "A simple mysql backup to Amazon S3"
@@ -20,5 +20,4 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rr', '~> 1.0.5'
 
   s.test_files  = Dir.glob("spec/**/*.rb")
-
 end
