@@ -61,6 +61,7 @@ class S3MysqlBackup
   end
 
   def mail_notification(filename)
+    return unless config['mail_to']
     stats = File.stat(filename)
     subject = "sql backup: #{@db_name}: #{human_size(stats.size)}"
 
