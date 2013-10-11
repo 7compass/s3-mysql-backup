@@ -7,30 +7,35 @@ require File.dirname(__FILE__) + '/s3utils'
 
 #
 class S3MysqlBackup
-  
+
   def initialize(db_name, path_to_config)
     @db_name        = db_name
     @path_to_config = path_to_config
 
     self
   end
-  
+
   def run
     ensure_backup_dir_exists
 
     connect_to_s3
 
     remove_old_backups
-    
+
     mail_notification(dump_db)
   end
-  
-  
+
+
   protected
-  
+
   def config
     defaults = { 'dump_host' => 'localhost' }
-    @s3config ||= defaults.merge(YAML::load_file(@path_to_config))
+    if @path_to_config.is_a?(Hash)
+      @s3config ||= defaults.merge(@path_to_config)
+    else
+      @s3config ||= defaults.merge(YAML::load_file(@path_to_config))
+    end
+
   end
 
   def connect_to_s3
@@ -66,17 +71,17 @@ class S3MysqlBackup
     subject = "sql backup: #{@db_name}: #{human_size(stats.size)}"
 
     content = []
-    content << "From: #{config['gmail_user']}"
+    content << "From: #{config['mail_user']}"
     content << "To: #{config['mail_to']}"
     content << "Subject: #{subject}"
     content << "Date: #{Time.now.rfc2822}"
     content << "\n#{File.basename(filename)}\n" # body
     content = content.join("\n")
 
-    smtp = Net::SMTP.new("smtp.gmail.com", 587)
+    smtp = Net::SMTP.new(config["mail_domain"], config["mail_port"])
     smtp.enable_starttls
-    smtp.start("smtp.gmail.com", config['gmail_user'], config['gmail_pass'], :login) do
-      smtp.send_message(content, config['gmail_user'], config['mail_to'])
+    smtp.start(config["mail_domain"], config['mail_user'], config['mail_pass'], :login) do
+      smtp.send_message(content, config['mail_user'], config['mail_to'])
     end
   end
 
