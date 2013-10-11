@@ -33,6 +33,8 @@ Configure with a YAML file:
 
 # backup_dir            where to store the local backups
 backup_dir: ~/s3_mysql_backups
+# remote_dir            where to store the remote backups
+remote_dir: /path/to/remote/backups
 
 # s3_access_key_id      your Amazon S3 access_key_id
 # s3_secret_access_key  your Amazon S3 secret_access_key
