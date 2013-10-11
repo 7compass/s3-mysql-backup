@@ -56,6 +56,7 @@ mail_domain: smtp.example.com
 mail_port: 587
 mail_user: me@example.com
 mail_pass: example_password
+mail_authentication: login
 
 ```
 
