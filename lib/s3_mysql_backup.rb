@@ -30,12 +30,7 @@ class S3MysqlBackup
 
   def config
     defaults = { 'dump_host' => 'localhost' }
-    if @path_to_config.is_a?(Hash)
-      @s3config ||= defaults.merge(@path_to_config)
-    else
-      @s3config ||= defaults.merge(YAML::load_file(@path_to_config))
-    end
-
+    @s3config ||= @path_to_config.is_a?(Hash) ? defaults.merge(@path_to_config) : defaults.merge(YAML::load_file(@path_to_config))
   end
 
   def connect_to_s3
