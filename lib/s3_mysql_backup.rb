@@ -17,11 +17,8 @@ class S3MysqlBackup
 
   def run
     ensure_backup_dir_exists
-
     connect_to_s3
-
     remove_old_backups
-
     mail_notification(dump_db)
   end
 
@@ -29,8 +26,24 @@ class S3MysqlBackup
   protected
 
   def config
-    defaults = { 'dump_host' => 'localhost' }
-    @s3config ||= @path_to_config.is_a?(Hash) ? defaults.merge(@path_to_config.stringify_keys) : defaults.merge(YAML::load_file(@path_to_config))
+    defaults = {
+      "dump_host"           => "localhost",
+      "mail_domain"         => "smtp.gmail.com",
+      "mail_port"           => "587",
+      "mail_authentication" => :login,
+      "backup_dir"          => "~/s3_mysql_backups",
+    }
+
+    if @s3config.nil?
+      @s3config = @path_to_config.is_a?(Hash) ? defaults.merge(stringify_keys(@path_to_config)) : defaults.merge(YAML::load_file(@path_to_config))
+
+      # Backcompat for gmail_* keys
+      @s3config.keys.each do |key|
+        @s3config[key.sub(/^gmail/, "mail")] = @s3config.delete(key)
+      end
+    end
+    
+    @s3config    
   end
 
   def connect_to_s3
@@ -75,7 +88,7 @@ class S3MysqlBackup
 
     smtp = Net::SMTP.new(config["mail_domain"], config["mail_port"])
     smtp.enable_starttls unless config["mail_start_tls"] == false
-    smtp.start(config["mail_domain"], config['mail_user'], config['mail_pass'], :config['mail_authentication']) do
+    smtp.start(config["mail_domain"], config['mail_user'], config['mail_pass'], config['mail_authentication']) do
       smtp.send_message(content, config['mail_user'], config['mail_to'])
     end
   end
@@ -110,5 +123,12 @@ class S3MysqlBackup
       end
     end # Dir.each
   end # remove_old_backups
+
+  def stringify_keys(hash)
+    hash.keys.each do |key|
+      hash[key.to_s] = hash.delete(key)
+    end
+    hash
+  end
 
 end

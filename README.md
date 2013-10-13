@@ -31,20 +31,20 @@ Configure with a YAML file:
 
 ```yaml
 
-# backup_dir            where to store the local backups
+# backup_dir            where to store the local backups, default is ~/s3_mysql_backups
 backup_dir: ~/s3_mysql_backups
-# remote_dir            where to store the remote backups
+# remote_dir            OPTIONAL, where to store the remote backups, default is the root of your s3_bucket
 remote_dir: /path/to/remote/backups
 
 # s3_access_key_id      your Amazon S3 access_key_id
 # s3_secret_access_key  your Amazon S3 secret_access_key
 # s3_bucket             your Amazon S3 bucket for the backups
-# s3_server             OPTIONAL: your non-Amazon S3-compatible server
+# s3_server             OPTIONAL, your non-Amazon S3-compatible server
 s3_access_key_id: my-key
 s3_secret_access_key: my-secret
 s3_bucket: my-bucket
 
-# dump_host             OPTIONAL: your mysql host name
+# dump_host             OPTIONAL, your mysql host name
 # dump_user             the database user for mysqldump
 # dump_pass             the password for the dump user
 dump_user: my-user
@@ -54,11 +54,12 @@ dump_pass: my-pass
 mail_to: recipient@example.com
 
 # Mail credentials
-mail_domain: smtp.example.com
-mail_port: 587
 mail_user: me@example.com
 mail_pass: example_password
-mail_authentication: login
+mail_domain: smtp.example.com   # OPTIONAL, defaults to: smtp.gmail.com
+mail_port: 587                  # OPTIONAL, defaults to: 587
+mail_authentication: login      # OPTIONAL, defaults to: :login
+mail_start_tls: true            # OPTIONAL, defaults to: true
 
 ```
 
@@ -72,9 +73,9 @@ mail_authentication: login
 
 From Ruby:
 
-    S3MysqlBackup.new('database_name', '/path/to/s3-mysql-backup-config.yml').run
+    S3MysqlBackup.new("database_name", "/path/to/s3-mysql-backup-config.yml").run
     or
-    S3MysqlBackup.new('database_name', {hash: of_options}).run
+    S3MysqlBackup.new("database_name", { hash: of_options }).run
 
 From command line:
 
@@ -91,6 +92,7 @@ Write tests
 
 
 ## Changelog
+- 2013-10-13 2.1.0 Allow other mail hosts, allow Hash config at runtime (https://github.com/7compass/s3-mysql-backup/pull/7)
 - 2013-06-01 1.2.2 Bugfix for passwords with spaces
 - 2013-06-01 1.2.1 Added mysql host option (github.com/sagrimson)
 - 2013-05-30 1.1.0 Added support for S3-compatible services, e.g. DreamObjects (thanks to John N. Milner - github.com/jnm)
