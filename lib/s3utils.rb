@@ -11,8 +11,9 @@ class S3Utils
     self
   end
 
-  def store(file_path)
-    @s3_bucket.objects.create(File.basename(file_path), open(file_path))
+  def store(file_path, remote_path=nil)
+    upload_location = (!remote_path.nil? && !remote_path.empty?) ? "#{remote_path}/#{File.basename(file_path)}" : File.basename(file_path)
+    @s3_bucket.objects.create(upload_location, open(file_path))
   end
 
   def delete(file_path)
