@@ -14,10 +14,10 @@ Gem::Specification.new do |s|
 
   s.executables  = "s3-mysql-backup"
 
-  s.add_runtime_dependency("aws-sdk", [">= 0"])
+  s.add_runtime_dependency("aws-sdk", ["~> 1.37"])
 
   s.add_development_dependency "rspec", "~> 2.12"
-  s.add_development_dependency "rr", "~> 1.0.5"
+  s.add_development_dependency "rr", "~> 1.0"
 
   s.test_files  = Dir.glob("spec/**/*.rb")
 
