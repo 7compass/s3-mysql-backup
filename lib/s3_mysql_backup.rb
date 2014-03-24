@@ -102,7 +102,9 @@ class S3MysqlBackup
     weekly  = (today - 30)
     monthly = (today - 120)
 
-    Dir["#{config['backup_dir']}/*.sql.gz"].each do |name|
+    path = File.expand_path(config['backup_dir'])
+
+    Dir["#{path}/*.sql.gz"].each do |name|
       date     = name.split('.')[1]
       filedate = Date.strptime(date, '%Y%m%d')
 

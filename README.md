@@ -92,6 +92,7 @@ Write tests
 
 
 ## Changelog
+- 2014-03-24 2.1.1 Bugfix for deleting old backups not happening
 - 2013-10-13 2.1.0 Allow other mail hosts, allow Hash config at runtime (https://github.com/7compass/s3-mysql-backup/pull/7)
 - 2013-06-01 1.2.2 Bugfix for passwords with spaces
 - 2013-06-01 1.2.1 Added mysql host option (github.com/sagrimson)
