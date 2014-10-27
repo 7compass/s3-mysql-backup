@@ -56,6 +56,7 @@ mail_to: recipient@example.com
 # Mail credentials
 mail_user: me@example.com
 mail_pass: example_password
+mail_from: noreply@example.com  # OPTIONAL, defaults to mail_user
 mail_domain: smtp.example.com   # OPTIONAL, defaults to: smtp.gmail.com
 mail_port: 587                  # OPTIONAL, defaults to: 587
 mail_authentication: login      # OPTIONAL, defaults to: :login

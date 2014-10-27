@@ -77,9 +77,10 @@ class S3MysqlBackup
     return unless config['mail_to']
     stats = File.stat(filename)
     subject = "sql backup: #{@db_name}: #{human_size(stats.size)}"
+    mail_from = config['mail_from'] ? config['mail_from'] : config['mail_user']
 
     content = []
-    content << "From: #{config['mail_user']}"
+    content << "From: #{mail_from}"
     content << "To: #{config['mail_to']}"
     content << "Subject: #{subject}"
     content << "Date: #{Time.now.rfc2822}"
@@ -89,7 +90,7 @@ class S3MysqlBackup
     smtp = Net::SMTP.new(config["mail_domain"], config["mail_port"])
     smtp.enable_starttls unless config["mail_start_tls"] == false
     smtp.start(config["mail_domain"], config['mail_user'], config['mail_pass'], config['mail_authentication']) do
-      smtp.send_message(content, config['mail_user'], config['mail_to'])
+      smtp.send_message(content, mail_from, config['mail_to'])
     end
   end
 
