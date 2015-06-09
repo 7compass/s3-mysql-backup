@@ -89,7 +89,12 @@ class S3MysqlBackup
 
     smtp = Net::SMTP.new(config["mail_domain"], config["mail_port"])
     smtp.enable_starttls unless config["mail_start_tls"] == false
-    smtp.start(config["mail_domain"], config['mail_user'], config['mail_pass'], config['mail_authentication']) do
+    smtp.start(
+               config["mail_domain"].to_s, 
+               config['mail_user'].to_s, 
+               config['mail_pass'].to_s, 
+               config['mail_authentication'].to_s
+               ) do
       smtp.send_message(content, mail_from, config['mail_to'])
     end
   end
