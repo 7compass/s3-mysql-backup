@@ -35,7 +35,6 @@ class S3Utils
     options[:server]= server unless server.nil?
     options[:region]= region unless region.nil?
      
-    puts "options: #{options}"
     AWS::S3::new(options)
     
   end

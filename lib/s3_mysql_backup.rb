@@ -47,7 +47,6 @@ class S3MysqlBackup
   end
 
   def connect_to_s3
-    puts "config #{config}"
     @s3utils ||= S3Utils.new(config['s3_access_key_id'], config['s3_secret_access_key'], config['s3_bucket'], config['s3_server'], config['s3_region'])
   end
 
@@ -88,13 +87,15 @@ class S3MysqlBackup
     content << "\n#{File.basename(filename)}\n" # body
     content = content.join("\n")
 
-    Net::SMTP.start(config["mail_domain"], config["mail_port"],:login) do |smtp|
-    smtp.starttls unless config["mail_start_tls"] == false
-    smtp.auth_login(config['mail_user'].to_s, config['mail_pass'].to_s) if config['mail_authentication']==:login
-    smtp.auth_plain(config['mail_user'].to_s, config['mail_pass'].to_s) if config['mail_authentication']==:plain
-   # smtp.start('localhost') do |m| 
+    smtp = Net::SMTP.new(config["mail_domain"], config["mail_port"])
+    smtp.enable_starttls unless config["mail_start_tls"] == false
+    smtp.start(
+      config["mail_domain"].to_s, 
+      config['mail_user'].to_s, 
+      config['mail_pass'].to_s, 
+      config['mail_authentication'].to_s
+    ) do
       smtp.send_message(content, mail_from, config['mail_to'])
-    #end
     end
   end
 
