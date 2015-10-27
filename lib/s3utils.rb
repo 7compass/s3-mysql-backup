@@ -4,9 +4,9 @@ require 'aws-sdk'
 #
 class S3Utils
 
-  def initialize(access_key_id, secret_access_key, bucket_name, server=nil)
+  def initialize(access_key_id, secret_access_key, bucket_name, server,region)
     @bucket_name   = bucket_name
-    @s3_connection = connect(access_key_id, secret_access_key, server)
+    @s3_connection = connect(access_key_id, secret_access_key,server, region)
     @s3_bucket     = get_or_create_bucket
     self
   end
@@ -28,19 +28,15 @@ class S3Utils
 
   protected
 
-  def connect(access_key_id, secret_access_key, server=nil)
-    if server == nil
-      AWS::S3::new(
-        :access_key_id     => access_key_id,
-        :secret_access_key => secret_access_key
-      )
-    else
-      AWS::S3::new(
-        :access_key_id     => access_key_id,
-        :secret_access_key => secret_access_key,
-        :server            => server
-      )
-    end
+  def connect(access_key_id, secret_access_key, server=nil, region=nil)
+    options={}
+    options[:access_key_id]=access_key_id
+    options[:secret_access_key]= secret_access_key
+    options[:server]= server unless server.nil?
+    options[:region]= region unless region.nil?
+     
+    AWS::S3::new(options)
+    
   end
 
   def get_or_create_bucket

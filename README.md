@@ -40,6 +40,7 @@ remote_dir: /path/to/remote/backups
 # s3_secret_access_key  your Amazon S3 secret_access_key
 # s3_bucket             your Amazon S3 bucket for the backups
 # s3_server             OPTIONAL, your non-Amazon S3-compatible server
+# s3_region: us-west-2  OPTIONAL, your aws region when not using the default
 s3_access_key_id: my-key
 s3_secret_access_key: my-secret
 s3_bucket: my-bucket
