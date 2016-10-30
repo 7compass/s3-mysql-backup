@@ -42,8 +42,8 @@ class S3MysqlBackup
         @s3config[key.sub(/^gmail/, "mail")] = @s3config.delete(key)
       end
     end
-    
-    @s3config    
+
+    @s3config
   end
 
   def connect_to_s3
@@ -90,10 +90,10 @@ class S3MysqlBackup
     smtp = Net::SMTP.new(config["mail_domain"], config["mail_port"])
     smtp.enable_starttls unless config["mail_start_tls"] == false
     smtp.start(
-      config["mail_domain"].to_s, 
-      config['mail_user'].to_s, 
-      config['mail_pass'].to_s, 
-      config['mail_authentication'].to_s
+      config["mail_domain"].to_s,
+      config['mail_user'],
+      (config['mail_pass'].nil? ? nil : config[:mail_pass].to_s),
+      config['mail_authentication']
     ) do
       smtp.send_message(content, mail_from, config['mail_to'])
     end
