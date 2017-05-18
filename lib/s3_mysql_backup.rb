@@ -111,7 +111,7 @@ class S3MysqlBackup
     path = File.expand_path(config['backup_dir'])
 
     Dir["#{path}/*.sql.gz"].each do |name|
-      date     = name.split('.')[1]
+      date     = name.split('.')[-4]
       filedate = Date.strptime(date, '%Y%m%d')
 
       if filedate < weekly && filedate >= monthly
